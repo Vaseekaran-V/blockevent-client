@@ -55,6 +55,7 @@ import { IoAuthGuardService } from './shared/services/Auth/ioauth.guard';
 import { ForgotPasswordComponent } from './components/screens/auth/forgot-password/forgot-password.component';
 import { PrivacyPolicyComponent } from './components/screens/privacy-policy/privacy-policy.component';
 import { TermsComponent } from './components/screens/terms/terms.component';
+import { TransferTicketComponent } from './components/screens/transfer-ticket/transfer-ticket.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -70,7 +71,8 @@ import { TermsComponent } from './components/screens/terms/terms.component';
     VerifiedTicketsComponent,
     ForgotPasswordComponent,
     PrivacyPolicyComponent,
-    TermsComponent
+    TermsComponent,
+    TransferTicketComponent
 
   ],
   imports: [

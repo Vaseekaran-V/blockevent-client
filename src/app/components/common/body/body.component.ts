@@ -44,7 +44,7 @@ export class BodyComponent implements OnInit {
       .subscribe(event => {
         // //console.log(event);
 
-        if (event.url == '/') {
+        if (event.url === '/') {
           // //console.log(`This is home`);
 
           this.isHome = true;
@@ -146,22 +146,22 @@ export class BodyComponent implements OnInit {
 
     this.nbMenuService.onItemClick()
       .pipe(
-        filter(({ tag }) => tag == 'user-menu')
+        filter(({ tag }) => tag === 'user-menu')
       ).subscribe(({ item }) => {
         // //console.log(item);
 
-        if (item.data == 'logout') {
+        if (item.data === 'logout') {
 
           this.logoutUser();
 
-        } else if (item.data == 'publicKey') {
+        } else if (item.data === 'publicKey') {
           if (this.userDetails != null) {
             this.copyMessage(this.userDetails.publicKey);
             this.utilService.showSuccessToast('', 'Public Key Copied to Clipboard');
           }
-        } else if (item.data == 'events') {
+        } else if (item.data === 'events') {
 
-          this.router.navigate(['/events'])
+          this.router.navigate(['/events']);
         }
 
       });
