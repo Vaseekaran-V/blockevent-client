@@ -169,6 +169,15 @@ export class EventListItemComponent implements OnInit {
 
   }
 
+  openTransferModal(dialog: TemplateRef<any>) {
+    if (!this.usedTicket) {
+      this.passwordModal = this.dialogService.open(dialog);
+    } else {
+      this.dialogService.open(this.qrRef);
+    }
+
+  }
+
   async handleTicketing() {
     this.showSpinner = true;
     if (!this.hasTicket) {
@@ -225,9 +234,9 @@ export class EventListItemComponent implements OnInit {
 
 
       /**
-       * 
+       *
        * This is where the thingy comes where you need to use eventToken to the firebase
-       * 
+       *
        */
 
       const ticketObject = await this.ticketService.getTicketByTrustline(secret, 'CBM2', user.email);
