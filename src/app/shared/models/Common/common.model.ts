@@ -32,6 +32,8 @@ export interface IFirebaseUserObject {
         GIOE?: { ticketID: string },
         CBM?: { ticketID: string },
         CBM2?: { ticketID: string },
+        CBM3?: { ticketID: string },
+
     };
     publicKey?: string;
     username?: string;

@@ -1,4 +1,101 @@
 <!-- event 1 -->
+
+<nb-card>
+  <nb-card-body>
+    <!-- <a target="_blank" href="https://www.facebook.com/groups/blockchaincmb/">
+      <div class="event-image" title="Colombo Blockchain Meetup" style="background-image: url(./assets/CBM2.png)">
+      </div>
+
+    </a> -->
+
+    <a target="_blank" href="https://www.facebook.com/groups/blockchaincmb/">
+      <div class="event-cover">
+        <img src="./assets/CBM3.png" alt="" srcset="">
+      </div>
+
+    </a>
+
+    <div class="event-details">
+      <nb-list>
+        <nb-list-item>
+          <div class="event-meta-header">
+            <h4>Monday, 24th February 2020</h4>
+            <h1>Colombo Blockchain Meetup #3</h1>
+          </div>
+        </nb-list-item>
+
+        <nb-list-item>
+          <div class="event-description">
+            Calling all Blockchain enthusiasts! This is your chance to be at the forefront of Blockchain development in
+            Colombo on our Third Meetup.
+          </div>
+        </nb-list-item>
+
+        <nb-list-item>
+          <div class="event-meta-details">
+
+            <div class="row">
+              <div class="col">
+                <div class="meta-item">
+                  <i class="eva eva-map-outline"></i>
+                  <a style=" color: #4b4b4b" title='See Location in Google Maps'
+                    href='https://goo.gl/maps/auw1maJbpwpNst3M7' target="_blank">
+                    <p>11th Floor Lee Hedges Tower 345, Colombo 03</p>
+                  </a>
+                </div>
+              </div>
+              <div class="col">
+                <div class="meta-item">
+                  <i class="eva eva-clock-outline"></i>
+                  <p>24th February at 17:30 - 19:30 UTC+05:30</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </nb-list-item>
+
+        <nb-list-item>
+          <div class="row">
+            <div class="col">
+              <nb-user name="99x Technology" title="Organizer" picture="./assets/99x.png"></nb-user>
+            </div>
+            <!-- <div class="col">
+              <nb-user name="StartupXFoundry" title="Organizer"></nb-user>
+
+            </div> -->
+          </div>
+        </nb-list-item>
+
+
+        <!-- <nb-list-item>
+          <button nbButton fullWidth shape="rectangle" hero status="primary" [disabled]='true'>Registration closed
+          </button>
+        </nb-list-item> -->
+
+        <nb-list-item *ngIf="hasTicket && !usedTicket">
+          <button nbButton fullWidth shape="rectangle" hero status="primary"
+            (click)="openPasswordModal(passwordDialog)">View Ticket
+          </button>
+        </nb-list-item>
+
+        <nb-list-item *ngIf="!hasTicket && !usedTicket">
+          <button nbButton fullWidth shape="rectangle" hero status="primary"
+            (click)="openPasswordModal(passwordDialog)">Get Ticket
+          </button>
+        </nb-list-item>
+
+        <nb-list-item *ngIf="hasTicket && usedTicket">
+          <button nbButton fullWidth shape="rectangle" hero status="primary" [disabled]='true'>Ticket Used
+          </button>
+        </nb-list-item>
+      </nb-list>
+
+
+    </div>
+
+
+  </nb-card-body>
+</nb-card>
 <nb-card>
   <nb-card-body>
     <!-- <a target="_blank" href="https://www.facebook.com/groups/blockchaincmb/">

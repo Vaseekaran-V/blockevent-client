@@ -58,7 +58,7 @@ export class TicketService {
                 .fromSecret(senderSecretKey);
             //console.log('point 1');
 
-            const CBDM = new Asset('CBM2', 'GARKZQ7AEQRLDXDYDAVRX774ACC5WLIDIA7JUIWC5SNDRY23TSZGOPZK');
+            const CBDM = new Asset('CBM3', 'GARKZQ7AEQRLDXDYDAVRX774ACC5WLIDIA7JUIWC5SNDRY23TSZGOPZK');
             //console.log('point 2');
 
             const senderObj = await this.server.loadAccount(senderKeys.publicKey());
@@ -144,7 +144,7 @@ export class TicketService {
             //   .fromSecret('SDNW4TVMRPTO7NPSBYHYA2ESHOWQLQLOVDN3AKW6Q65YOVT7DIC3KYPO');
 
             // Create an object to represent the new asset
-            const CBDM = new Asset('CBM2', 'GARKZQ7AEQRLDXDYDAVRX774ACC5WLIDIA7JUIWC5SNDRY23TSZGOPZK');
+            const CBDM = new Asset('CBM3', 'GARKZQ7AEQRLDXDYDAVRX774ACC5WLIDIA7JUIWC5SNDRY23TSZGOPZK');
 
             // First, the receiving account must trust the asset
             const account = await this.server.loadAccount(senderKeys.publicKey());
