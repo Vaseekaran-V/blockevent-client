@@ -5,40 +5,43 @@ import {
   ViewChild,
   ElementRef,
   ContentChild
-} from "@angular/core";
-import { NbDialogService, NbDialogRef } from "@nebular/theme";
-import { UtilService } from "src/app/shared/services/Common/util.service";
-import { StorageService } from "src/app/shared/services/Storage/storgare.service";
+} from '@angular/core';
+import { NbDialogService, NbDialogRef } from '@nebular/theme';
+import { UtilService } from 'src/app/shared/services/Common/util.service';
+import { StorageService } from 'src/app/shared/services/Storage/storgare.service';
 import {
   IFirebaseUserObject,
   IFirebaseTicketObject
-} from "src/app/shared/models/Common/common.model";
-import { TicketService } from "src/app/shared/services/Providers/ticket.service";
-import { RegistrationService } from "src/app/shared/services/Providers/registration.service";
-import { forEach } from "@angular/router/src/utils/collection";
+} from 'src/app/shared/models/Common/common.model';
+import { TicketService } from 'src/app/shared/services/Providers/ticket.service';
+import { RegistrationService } from 'src/app/shared/services/Providers/registration.service';
+import { forEach } from '@angular/router/src/utils/collection';
 
-import * as sha256 from "sha256";
+import * as sha256 from 'sha256';
 
 @Component({
-  selector: "app-event-list-item",
-  templateUrl: "./event-list-item.component.html",
-  styleUrls: ["./event-list-item.component.scss"]
+  selector: 'app-event-list-item',
+  templateUrl: './event-list-item.component.html',
+  styleUrls: ['./event-list-item.component.scss']
 })
 export class EventListItemComponent implements OnInit {
   // @ContentChild('qrViewModal') qrRef: TemplateRef<any>;
 
-  @ViewChild("qrViewModal", { read: TemplateRef }) qrRef: TemplateRef<any>;
+  @ViewChild('qrViewModal', { read: TemplateRef }) qrRef: TemplateRef<any>;
 
   public myAngularxQrCode: string = null;
   // showTokenField = false;
   usedTicket = false;
   hasTicket = false;
   password: string;
+  receiverUsername: string;
+  senderPassword: string;
   passwordModal: NbDialogRef<any>;
   qrModal: NbDialogRef<any>;
   showSpinner = false;
 
   eventToken: string;
+  transferModal: NbDialogRef<any>;
 
   constructor(
     private dialogService: NbDialogService,
@@ -47,7 +50,7 @@ export class EventListItemComponent implements OnInit {
     private ticketService: TicketService,
     private registrationService: RegistrationService
   ) {
-    this.myAngularxQrCode = "";
+    this.myAngularxQrCode = '';
     this.hasTicket = false;
 
     const user: IFirebaseUserObject = this.storageService.getUser();
@@ -149,8 +152,8 @@ export class EventListItemComponent implements OnInit {
 
       if (xdr == null) {
         this.utilService.showErrorToast(
-          "Unable to get ticket",
-          "Ooops something went wrong!"
+          'Unable to get ticket',
+          'Ooops something went wrong!'
         );
         this.showSpinner = false;
         return null;
@@ -166,14 +169,14 @@ export class EventListItemComponent implements OnInit {
         ticketID: ticketID
       };
 
-      //console.log(qrcodeObject);
+      // console.log(qrcodeObject);
       this.myAngularxQrCode = JSON.stringify(qrcodeObject);
       this.openQRModal();
     } catch (error) {
       // //console.log(error);
       this.utilService.showErrorToast(
-        "Unable to get ticket",
-        "Ooops something went wrong!"
+        'Unable to get ticket',
+        'Ooops something went wrong!'
       );
       this.showSpinner = false;
     }
@@ -189,7 +192,7 @@ export class EventListItemComponent implements OnInit {
 
   openTransferModal(dialog: TemplateRef<any>) {
     if (!this.usedTicket) {
-      this.passwordModal = this.dialogService.open(dialog);
+      this.transferModal = this.dialogService.open(dialog);
     } else {
       this.dialogService.open(this.qrRef);
     }
@@ -205,6 +208,41 @@ export class EventListItemComponent implements OnInit {
     }
   }
 
+  async handleTicketTransfer() {
+    this.showSpinner = true;
+    if (!this.hasTicket) {
+      this.utilService.showErrorToast(`Ticket not present`, `Ooops..`);
+      // await this.getTicket();
+    } else {
+      // this.utilService.showSuccessToast(`Success`, `success`);
+      await this.transferTicket();
+    }
+  }
+  transferTicket() {
+    // throw new Error("Method not implemented.");
+    if (
+      this.receiverUsername === undefined ||
+      this.receiverUsername == null ||
+      this.receiverUsername === ''
+    ) {
+      this.utilService.showErrorToast(`Please enter receiver's username`, `Ooops..`);
+      this.showSpinner = false;
+      return;
+    } else if (
+      this.senderPassword === undefined ||
+      this.senderPassword == null ||
+      this.senderPassword === ''
+    ) {
+      this.utilService.showErrorToast(`Please enter your password`, `Ooops..`);
+      this.showSpinner = false;
+      return;
+    } else {
+      this.utilService.showSuccessToast(`data submitted successfuly`, `Success!`);
+    }
+
+    return;
+  }
+
   async getTicket() {
     try {
       // //console.log(this.password);
@@ -218,7 +256,7 @@ export class EventListItemComponent implements OnInit {
       if (
         this.password == undefined ||
         this.password == null ||
-        this.password == ""
+        this.password == ''
       ) {
         this.utilService.showErrorToast(`enter your password`, `Ooops..`);
         this.showSpinner = false;
@@ -257,14 +295,14 @@ export class EventListItemComponent implements OnInit {
 
       const ticketObject = await this.ticketService.getTicketByTrustline(
         secret,
-        "CBM3",
+        'CBM3',
         user.email
       );
 
       if (!ticketObject) {
         this.utilService.showErrorToast(
-          "Unable to get ticket",
-          "Failed to get ticket!!!"
+          'Unable to get ticket',
+          'Failed to get ticket!!!'
         );
         return;
       }
@@ -281,7 +319,7 @@ export class EventListItemComponent implements OnInit {
       // //console.log(`This is the xdr ${xdr}`);
 
       if (xdr == null) {
-        this.utilService.showErrorToast("", "Unable to create ticket");
+        this.utilService.showErrorToast('', 'Unable to create ticket');
         this.showSpinner = false;
 
         return;
@@ -293,11 +331,11 @@ export class EventListItemComponent implements OnInit {
         emailHash: this.registrationService.hashEmail(user.email.toLowerCase()),
         ticketID: ticketID
       };
-      //console.log(qrcodeObject);
+      // console.log(qrcodeObject);
 
       this.myAngularxQrCode = JSON.stringify(qrcodeObject);
 
-      this.utilService.showSuccessToast("Ticket has been reserved!", "");
+      this.utilService.showSuccessToast('Ticket has been reserved!', '');
       this.hasTicket = true;
 
       this.openQRModal();
@@ -308,8 +346,8 @@ export class EventListItemComponent implements OnInit {
       // //console.log(error);
 
       this.utilService.showErrorToast(
-        "Ooops something went wrong",
-        "Failed to get ticket!"
+        'Ooops something went wrong',
+        'Failed to get ticket!'
       );
       this.showSpinner = false;
     }

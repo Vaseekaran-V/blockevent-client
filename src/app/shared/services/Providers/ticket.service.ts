@@ -51,9 +51,7 @@ export class TicketService {
     }
 
     async sendTicket(senderSecretKey) {
-
         try {
-
             const senderKeys = Keypair
                 .fromSecret(senderSecretKey);
             //console.log('point 1');
